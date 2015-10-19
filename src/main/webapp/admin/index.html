@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Alumni circa mundi</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- jQuery -->
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+
+<!-- Optional theme -->
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+
+<!-- Latest compiled and minified JavaScript -->
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.3.0/knockout-min.js"></script>
+
+
+
+<script>
+	
+</script>
+</head>
+
+<body>
+	<div class="navbar">
+		<div class="navbar-inner">
+			<a class="brand" href="#">ToDo API Client Demo</a>
+		</div>
+	</div>
+	<div id="main" class="container">
+		<div id="notif"></div>
+		<table class="table table-striped">
+			<tr>
+				<td><b>Alumni</b></td>
+				<td><b>Localizacion</b></td>
+				<td><b>Options</b></td>
+			</tr>
+			<!-- ko foreach: alumnis -->
+			<tr>
+				<td><p>
+						<b data-bind="text: name"></b>
+					</p>
+					<p data-bind="text: description"></p>
+				</td>
+				<td><p>
+						<b data-bind="text: city"></b>
+					</p>
+					<p data-bind="text: country"></p>
+					<p><span data-bind="text: latitude"></span>, <span data-bind="text: longitude"></span>  </p>
+				</td>
+				<td>
+					<button data-bind="click: $parent.beginEdit" class="btn">Edit</button>
+					<button data-bind="click: $parent.remove" class="btn">Delete</button>
+				</td>
+			</tr>
+			<!-- /ko -->
+		</table>
+		<button type="button" class="btn btn-primary btn-lg"
+			data-toggle="modal" data-target="#add">Add Alumni</button>
+
+	</div>
+
+	<!-- Modal -->
+	<div class="modal fade" id="add" tabindex="-1" role="dialog"
+		aria-labelledby="addModalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title" id="addModalLabel">Nuevo Alumni</h4>
+				</div>
+				<div class="modal-body">
+					<form class="form-horizontal">
+						<div class="control-group">
+							<label class="control-label" for="inputName">Nombre</label>
+							<div class="controls">
+								<input data-bind="value: name" type="text" id="inputName"
+									placeholder="Nombre del Alumno" style="width: 150px;">
+							</div>
+						</div>
+						<div class="control-group">
+							<label class="control-label" for="inputDescription">Descripcion</label>
+							<div class="controls">
+								<input data-bind="value: description" type="text"
+									id="inputDescription" placeholder="Descripcion"
+									style="width: 300px;">
+							</div>
+						</div>
+						<div class="control-group">
+							<label class="control-label" for="inputCountry">Pais</label>
+							<div class="controls">
+								<input data-bind="value: country" type="text" id="inputCountry"
+									placeholder="Pais donde reside" style="width: 150px;">
+							</div>
+						</div>
+						<div class="control-group">
+							<label class="control-label" for="inputCity">Ciudad</label>
+							<div class="controls">
+								<input data-bind="value: city" type="text" id="inputCity"
+									placeholder="Ciudad donde reside" style="width: 150px;">
+							</div>
+						</div>
+						<div class="control-group">
+							<label class="control-label" for="inputCourse">Curso</label>
+							<div class="controls">
+								<input data-bind="value: course" type="text" id="inputCourse"
+									placeholder="Curso del Alumno" style="width: 150px;">
+							</div>
+						</div>
+						<div class="control-group">
+							<label class="control-label" for="inputLat">Latitud/Longitud</label>
+							<div class="controls">
+								<input data-bind="value: latitude" type="text" id="inputLat"
+									placeholder="Latitud" style="width: 150px;"> , 
+								<input data-bind="value: longitude" type="text" id="inputLng"
+									placeholder="Longitud" style="width: 150px;">
+							</div>
+						</div>
+					</form>
+
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+					<button data-bind="click: addAlumni" type="button"
+						class="btn btn-primary">Guardar</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<!-- Modal -->
+	<div class="modal fade" id="edit" tabindex="-1" role="dialog"
+		aria-labelledby="editModalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title" id="editModalLabel">Editar Alumni</h4>
+				</div>
+				<div class="modal-body">
+					<form class="form-horizontal">
+						<div class="control-group">
+							<label class="control-label" for="inputName">Nombre</label>
+							<div class="controls">
+								<input data-bind="value: name" type="text" id="inputName"
+									placeholder="Nombre del Alumno" style="width: 150px;">
+							</div>
+						</div>
+						<div class="control-group">
+							<label class="control-label" for="inputDescription">Descripcion</label>
+							<div class="controls">
+								<input data-bind="value: description" type="text"
+									id="inputDescription" placeholder="Descripcion"
+									style="width: 300px;">
+							</div>
+						</div>
+						<div class="control-group">
+							<label class="control-label" for="inputCountry">Pais</label>
+							<div class="controls">
+								<input data-bind="value: country" type="text" id="inputCountry"
+									placeholder="Pais donde reside" style="width: 150px;">
+							</div>
+						</div>
+						<div class="control-group">
+							<label class="control-label" for="inputCity">Ciudad</label>
+							<div class="controls">
+								<input data-bind="value: city" type="text" id="inputCity"
+									placeholder="Ciudad donde reside" style="width: 150px;">
+							</div>
+						</div>
+						<div class="control-group">
+							<label class="control-label" for="inputCourse">Curso</label>
+							<div class="controls">
+								<input data-bind="value: course" type="text" id="inputCourse"
+									placeholder="Curso del Alumno" style="width: 150px;">
+							</div>
+						</div>
+						<div class="control-group">
+							<label class="control-label" for="inputLat">Latitud/Longitud</label>
+							<div class="controls">
+								<input data-bind="value: latitude" type="text" id="inputLat"
+									placeholder="Latitud" style="width: 150px;"> , 
+								<input data-bind="value: longitude" type="text" id="inputLng"
+									placeholder="Longitud" style="width: 150px;">
+							</div>
+						</div>
+					</form>
+
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+					<button data-bind="click: editAlumni" type="button"
+						class="btn btn-primary">Guardar</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+	<script type="text/javascript">
+		function AlumniViewModel() {
+			var self = this;
+			self.alumniURI = window.location.protocol + '//'
+					+ window.location.hostname + '/ws/alumni';
+			self.alumnis = ko.observableArray();
+
+			self.ajax = function(uri, method, data) {
+				if (data) {
+					data = "alumni=" + JSON.stringify(data);
+				}
+				var request = {
+					url : uri,
+					type : method,
+					contentType : "application/json",
+					cache : false,
+					dataType : 'json',
+					data : data,
+					error : function(jqXHR) {
+						console.log("ajax error " + jqXHR.status);
+						showalert("ajax error " + jqXHR.status);
+					}
+				};
+				return $.ajax(request);
+			}
+
+			self.beginEdit = function(alumni) {
+				editAlumniViewModel.setAlumni(alumni);
+				$('#edit').modal('show');
+			}
+			self.edit = function(alumni, data) {
+				self.ajax(self.alumniURI, 'PUT', data).done(function(res) {
+					self.updateAlumni(alumni, res);
+				});
+			}
+			self.updateAlumni = function(alumni, newAlumni) {
+				var i = self.alumnis.indexOf(alumni);
+				self.alumnis()[i].id(newAlumni.id);
+				self.alumnis()[i].name(newAlumni.name);
+				self.alumnis()[i].description(newAlumni.description);
+				self.alumnis()[i].city(newAlumni.city);
+				self.alumnis()[i].country(newAlumni.country);
+				self.alumnis()[i].course(newAlumni.course);
+				self.alumnis()[i].latitude(newAlumni.location.latitude);
+				self.alumnis()[i].longitude(newAlumni.location.longitude);
+			}
+
+			self.remove = function(alumni) {
+				self.ajax(self.alumniURI + "?id=" + alumni.id(), 'DELETE')
+						.done(function() {
+							self.alumnis.remove(alumni);
+						});
+			}
+
+			self.ajax(self.alumniURI, 'GET').done(function(data) {
+				for (var i = 0; i < data.length; i++) {
+					self.alumnis.push({
+						id : ko.observable(data[i].id),
+						name : ko.observable(data[i].name),
+						description : ko.observable(data[i].description),
+						city : ko.observable(data[i].city),
+						country : ko.observable(data[i].country),
+						course : ko.observable(data[i].course),
+						latitude: ko.observable(data[i].location.latitude),
+						longitude: ko.observable(data[i].location.longitude)
+					});
+				}
+			});
+
+			self.add = function(alumni) {
+				self.ajax(self.alumniURI, 'POST', alumni).done(function(data) {
+					self.alumnis.push({
+						id : ko.observable(data.id),
+						name : ko.observable(data.name),
+						description : ko.observable(data.description),
+						city : ko.observable(data.city),
+						country : ko.observable(data.country),
+						course : ko.observable(data.course),
+						latitude: ko.observable(data.location.latitude),
+						longitude: ko.observable(data.location.longitude)
+					});
+				});
+			}
+		}
+
+		function AddAlumniViewModel() {
+			var self = this;
+			self.name = ko.observable();
+			self.description = ko.observable();
+			self.city = ko.observable();
+			self.country = ko.observable();
+			self.course = ko.observable();
+			self.latitude = ko.observable();
+			self.longitude = ko.observable();
+
+			self.addAlumni = function() {
+				$('#add').modal('hide');
+				alumniViewModel.add({
+					name : self.name(),
+					description : self.description(),
+					city : self.city(),
+					country : self.country(),
+					course : self.course(),
+					location : {
+						latitude: self.latitude(),
+						longitude: self.longitude()
+					}
+				});
+				self.name("");
+				self.description("");
+				self.city("");
+				self.country("");
+				self.course("");
+				self.latitude("0");
+				self.longitude("0");
+			}
+		}
+		function EditAlumniViewModel() {
+			var self = this;
+			self.id = ko.observable();
+			self.name = ko.observable();
+			self.description = ko.observable();
+			self.city = ko.observable();
+			self.country = ko.observable();
+			self.course = ko.observable();
+			self.latitude = ko.observable();
+			self.longitude = ko.observable();
+			
+			self.setAlumni = function(alumni) {
+				self.alumni = alumni;
+				self.id(alumni.id());
+				self.name(alumni.name());
+				self.description(alumni.description());
+				self.city(alumni.city());
+				self.country(alumni.country());
+				self.course(alumni.course());
+				self.latitude(alumni.latitude());
+				self.longitude(alumni.longitude());
+				$('edit').modal('show');
+			}
+			self.editAlumni = function() {
+				$('#edit').modal('hide');
+				alumniViewModel.edit(self.alumni, {
+					id : self.id(),
+					name : self.name(),
+					description : self.description(),
+					city : self.city(),
+					country : self.country(),
+					course : self.course(),
+					location : {
+						latitude: self.latitude(),
+						longitude: self.longitude()
+					}
+				});
+			}
+		}
+
+		var alumniViewModel = new AlumniViewModel();
+		var addAlumniViewModel = new AddAlumniViewModel();
+		var editAlumniViewModel = new EditAlumniViewModel();
+
+		ko.applyBindings(alumniViewModel, $('#main')[0]);
+		ko.applyBindings(addAlumniViewModel, $('#add')[0]);
+		ko.applyBindings(editAlumniViewModel, $('#edit')[0]);
+
+		function showalert(alertText) {
+			$("#alert").remove();
+			var $div = $("<div>", {
+				id : "alert",
+				class : "alert alert-danger",
+				role : "alert",
+				text : alertText
+			});
+			$("#notif").append($div);
+			$("#alert").show().delay(5000).fadeOut().delay(5000);
+		}
+	</script>
+</body>
+</html>

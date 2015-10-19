@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<web-app
+        version="2.5"
+        xmlns="http://java.sun.com/xml/ns/javaee"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+   
+   
+       <!-- Rest Servlet -->
+    <servlet>
+        <servlet-name>jersey</servlet-name>
+        <servlet-class>com.sun.jersey.spi.container.servlet.ServletContainer</servlet-class>
+        <init-param>
+            <param-name>com.sun.jersey.config.property.packages</param-name>
+            <param-value>es.tajamar.alumnimap.ws</param-value>
+        </init-param>
+        <init-param>
+            <param-name>com.sun.jersey.config.feature.DisableWADL</param-name>
+            <param-value>true</param-value>
+        </init-param>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>jersey</servlet-name>
+        <url-pattern>/ws/*</url-pattern>
+    </servlet-mapping>
+   
+   
+<!--     <servlet> -->
+<!--         <servlet-name>sign</servlet-name> -->
+<!--         <servlet-class>es.tajamar.alumnimap.SignGuestbookServlet</servlet-class> -->
+<!--     </servlet> -->
+<!--     <servlet> -->
+<!--        <servlet-name>guestbook</servlet-name> -->
+<!--       <servlet-class>es.tajamar.alumnimap.GuestbookServlet</servlet-class> -->
+<!--     </servlet> -->
+<!--     <servlet-mapping> -->
+<!--         <servlet-name>sign</servlet-name> -->
+<!--         <url-pattern>/sign</url-pattern> -->
+<!--     </servlet-mapping> -->
+<!--     <servlet-mapping> -->
+<!--       <servlet-name>guestbook</servlet-name> -->
+<!--       <url-pattern>/guestbook</url-pattern> -->
+<!--     </servlet-mapping> -->
+<!--     <welcome-file-list> -->
+<!--         <welcome-file>index.html</welcome-file> -->
+<!--     </welcome-file-list> -->
+<!-- [START Objectify] -->
+    <filter>
+      <filter-name>ObjectifyFilter</filter-name>
+      <filter-class>com.googlecode.objectify.ObjectifyFilter</filter-class>
+    </filter>
+    <filter-mapping>
+      <filter-name>ObjectifyFilter</filter-name>
+      <url-pattern>/*</url-pattern>
+    </filter-mapping>
+    <listener>
+      <listener-class>es.tajamar.alumnimap.OfyHelper</listener-class>
+    </listener>
+<!-- [END Objectify] -->
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>user</web-resource-name>
+            <url-pattern>/admin/*</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <role-name>*</role-name>
+        </auth-constraint>
+    </security-constraint>
+</web-app>

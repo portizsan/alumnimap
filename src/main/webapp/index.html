@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style type="text/css">
+html, body {
+	height: 100%;
+	margin: 0;
+	padding: 0;
+}
+
+#map {
+	height: 100%;
+}
+</style>
+<!-- jQuery -->
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+
+</head>
+<body>
+	<div id="map"></div>
+	<script type="text/javascript">
+		var map;
+		function initMap() {
+			var tajamarLocation = {
+				lat : 40.396801,
+				lng : -3.650127
+			};
+
+			alumnimap = new google.maps.Map(document.getElementById('map'), {
+				zoom : 3,
+				center : tajamarLocation
+			});
+
+			var geocoder = new google.maps.Geocoder();
+			
+			$.ajax({
+				  method: "GET",
+				  url: "/ws/alumni"
+				}).done(function( data ) {
+				
+					for (i in data) {
+						createMarker(data[i], geocoder);
+						};
+				  });
+		
+		}
+		
+		
+		function createMarker(element, geocoder){
+// 			address= element.city + "," + element.country
+// 			  geocoder.geocode({'address': address}, function(results, status) {
+// 				    if (status === google.maps.GeocoderStatus.OK) {
+					var markerLocation = {lat: element.location.latitude, lng: element.location.latitude};
+				       var marker = new google.maps.Marker({
+				        map: alumnimap,
+				        position: markerLocation,
+						title : element.name
+				      });
+					var infowindow = new google.maps.InfoWindow({
+						content :'<h3>'+element.name+'</h3><h5>'+element.course+'</h5><p>'+ element.description+'</p>'
+					});
+					
+					marker.addListener('click', function() {
+						infowindow.open(alumnimap, marker);
+					});	
+// 				    } else {
+// 				    	console.log ( 'Geocode was not successful for the following reason: ' + status );
+// 				    }
+// 				  });
+		}
+		
+	</script>
+	<script async defer
+		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBA7y9ytaEfA6TFBcpjYGOXU7CkgPN6NtE&callback=initMap">
+		
+	</script>
+</body>
+</html>
